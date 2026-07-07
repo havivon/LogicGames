@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>חידות היגיון אינטראקטיביות</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ===================== מסך הבית ===================== -->
+<main id="home" class="screen active">
+  <header class="hero">
+    <h1>🧩 חידות היגיון</h1>
+    <p>שלוש חידות קלאסיות — פחות דיבורים, יותר לחיצות. בהצלחה!</p>
+  </header>
+
+  <div class="cards">
+    <button class="card" data-goto="river">
+      <span class="card-emoji">🐺🐑🥬</span>
+      <span class="card-title">חציית הנהר</span>
+      <span class="card-desc">העבירו זאב, כבשה וחסה לגדה השנייה — בלי שמישהו יאכל מישהו.</span>
+      <span class="card-cta">לחידה ←</span>
+    </button>
+
+    <button class="card" data-goto="frogs">
+      <span class="card-emoji">🐸🪷🐸</span>
+      <span class="card-title">קפיצת הצפרדעים</span>
+      <span class="card-desc">שתי קבוצות של צפרדעים צריכות להחליף מקומות על אבני הנהר.</span>
+      <span class="card-cta">לחידה ←</span>
+    </button>
+
+    <button class="card" data-goto="bridge">
+      <span class="card-emoji">🌉🕯️</span>
+      <span class="card-title">הגשר והנר</span>
+      <span class="card-desc">ארבעה אנשים, נר אחד, 17 דקות. יעברו כולם בזמן?</span>
+      <span class="card-cta">לחידה ←</span>
+    </button>
+  </div>
+</main>
+
+<!-- ===================== חידה 1: חציית הנהר ===================== -->
+<section id="river" class="screen">
+  <nav class="topbar">
+    <button class="back-btn" data-goto="home">→ חזרה</button>
+    <h2>🐺 חציית הנהר</h2>
+    <span class="counter">חציות: <b id="river-moves">0</b> <small>(אפשרי ב־7)</small></span>
+  </nav>
+
+  <p class="rules">
+    האיכר צריך להעביר את הזאב, הכבשה והחסה לגדה השנייה. בסירה יש מקום לאיכר ולנוסע אחד בלבד.
+    אם הזאב יישאר לבד עם הכבשה — הוא יטרוף אותה. אם הכבשה תישאר לבד עם החסה — היא תאכל אותה.
+    <br><b>איך משחקים:</b> לוחצים על דמות כדי להעלות/להוריד אותה מהסירה, ואז לוחצים "לחצות!".
+  </p>
+
+  <div class="river-scene">
+    <div class="bank" id="bank-left"></div>
+    <div class="water">
+      <div class="waves"></div>
+      <div class="boat" id="boat">
+        <div class="boat-seats" id="boat-seats"><span class="farmer">🧑‍🌾</span></div>
+        <div class="boat-hull">⛵</div>
+      </div>
+    </div>
+    <div class="bank" id="bank-right"></div>
+  </div>
+
+  <div class="controls">
+    <button class="primary-btn" id="river-cross">לחצות! 🚣</button>
+    <button class="ghost-btn" id="river-reset">התחלה מחדש ↺</button>
+  </div>
+  <p class="status" id="river-status"></p>
+</section>
+
+<!-- ===================== חידה 2: צפרדעים ===================== -->
+<section id="frogs" class="screen">
+  <nav class="topbar">
+    <button class="back-btn" data-goto="home">→ חזרה</button>
+    <h2>🐸 קפיצת הצפרדעים</h2>
+    <span class="counter">קפיצות: <b id="frogs-moves">0</b> <small>(אפשרי ב־15)</small></span>
+  </nav>
+
+  <p class="rules">
+    שלוש צפרדעים ירוקות מול שלוש צפרדעים כתומות, והן צריכות להחליף מקומות.
+    צפרדע יכולה לזוז רק קדימה: צעד אחד לאבן פנויה, או קפיצה מעל צפרדע אחת בדיוק אל אבן פנויה. אסור לזוז אחורה!
+    <br><b>איך משחקים:</b> פשוט לוחצים על הצפרדע שרוצים להזיז.
+  </p>
+
+  <div class="pond">
+    <div class="pads" id="pads"></div>
+  </div>
+
+  <div class="controls">
+    <button class="ghost-btn" id="frogs-undo">ביטול מהלך ↩</button>
+    <button class="ghost-btn" id="frogs-reset">התחלה מחדש ↺</button>
+  </div>
+  <p class="status" id="frogs-status"></p>
+</section>
+
+<!-- ===================== חידה 3: הגשר והנר ===================== -->
+<section id="bridge" class="screen">
+  <nav class="topbar">
+    <button class="back-btn" data-goto="home">→ חזרה</button>
+    <h2>🌉 הגשר והנר</h2>
+    <span class="counter">זמן: <b id="bridge-time">0</b>/17 דק'</span>
+  </nav>
+
+  <p class="rules">
+    ארבעה אנשים צריכים לחצות גשר רעוע בלילה, ויש להם נר אחד שיכבה בעוד <b>17 דקות</b>.
+    על הגשר יכולים ללכת לכל היותר שניים יחד, וחייבים את הנר. זוג הולך בקצב של האיטי מביניהם.
+    זריז ⚡ ‎1 דק' · רץ 🏃 ‎2 דק' · מטייל 🚶 ‎5 דק' · סבא 🧓 ‎10 דק'.
+    <br><b>איך משחקים:</b> בוחרים עד שני אנשים בצד שבו נמצא הנר, ולוחצים "לעבור את הגשר".
+  </p>
+
+  <div class="candle-wrap">
+    <span class="candle-emoji" id="candle-emoji">🕯️</span>
+    <div class="candle-bar"><div class="candle-fill" id="candle-fill"></div></div>
+  </div>
+
+  <div class="bridge-scene">
+    <div class="cliff" id="cliff-start"><div class="cliff-label">התחלה</div><div class="people" id="people-start"></div></div>
+    <div class="bridge-deck">
+      <div class="bridge-planks"></div>
+      <div class="lamp" id="lamp">🕯️</div>
+    </div>
+    <div class="cliff" id="cliff-end"><div class="cliff-label">מטרה 🏁</div><div class="people" id="people-end"></div></div>
+  </div>
+
+  <div class="controls">
+    <button class="primary-btn" id="bridge-cross">לעבור את הגשר 🌉</button>
+    <button class="ghost-btn" id="bridge-reset">התחלה מחדש ↺</button>
+  </div>
+  <p class="status" id="bridge-status"></p>
+</section>
+
+<!-- ===================== חלון ניצחון/הפסד ===================== -->
+<div class="overlay" id="overlay">
+  <div class="dialog">
+    <div class="dialog-emoji" id="dialog-emoji">🎉</div>
+    <h3 id="dialog-title"></h3>
+    <p id="dialog-text"></p>
+    <div class="dialog-actions">
+      <button class="primary-btn" id="dialog-retry">עוד פעם ↺</button>
+      <button class="ghost-btn" data-goto="home">לכל החידות</button>
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

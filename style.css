@@ -1,0 +1,218 @@
+/* ============ בסיס ============ */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #0f1b2d;
+  --panel: #16263e;
+  --ink: #eef4ff;
+  --muted: #9db2cc;
+  --accent: #ffb84d;
+  --accent-ink: #3a2400;
+  --good: #4ade80;
+  --bad: #f87171;
+  --radius: 18px;
+}
+
+body {
+  font-family: "Segoe UI", "Heebo", "Arial Hebrew", Tahoma, sans-serif;
+  background: radial-gradient(1200px 600px at 80% -10%, #1d3a5f 0%, var(--bg) 60%);
+  color: var(--ink);
+  min-height: 100vh;
+}
+
+.screen { display: none; max-width: 900px; margin: 0 auto; padding: 24px 16px 60px; }
+.screen.active { display: block; animation: fadeIn .35s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+/* ============ מסך הבית ============ */
+.hero { text-align: center; padding: 48px 0 32px; }
+.hero h1 { font-size: 2.6rem; margin-bottom: 10px; }
+.hero p { color: var(--muted); font-size: 1.1rem; }
+
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; }
+.card {
+  background: var(--panel);
+  border: 1px solid #ffffff14;
+  border-radius: var(--radius);
+  padding: 26px 22px;
+  text-align: right;
+  color: var(--ink);
+  cursor: pointer;
+  display: flex; flex-direction: column; gap: 10px;
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s;
+  font: inherit;
+}
+.card:hover { transform: translateY(-5px); border-color: var(--accent); box-shadow: 0 14px 34px #00000055; }
+.card-emoji { font-size: 2.4rem; }
+.card-title { font-size: 1.35rem; font-weight: 700; }
+.card-desc { color: var(--muted); line-height: 1.5; }
+.card-cta { color: var(--accent); font-weight: 600; margin-top: auto; }
+
+/* ============ מבנה משותף לחידות ============ */
+.topbar { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 14px; }
+.topbar h2 { font-size: 1.5rem; flex: 1; }
+.counter { background: var(--panel); border: 1px solid #ffffff14; padding: 6px 14px; border-radius: 999px; color: var(--muted); }
+.counter b { color: var(--accent); }
+
+.back-btn, .ghost-btn, .primary-btn {
+  font: inherit; cursor: pointer; border-radius: 999px; padding: 10px 20px;
+  border: 1px solid #ffffff2a; background: transparent; color: var(--ink);
+  transition: background .15s, transform .1s;
+}
+.back-btn:hover, .ghost-btn:hover { background: #ffffff14; }
+.primary-btn { background: var(--accent); color: var(--accent-ink); border: none; font-weight: 700; font-size: 1.05rem; }
+.primary-btn:hover { transform: scale(1.04); }
+.primary-btn:disabled { opacity: .4; cursor: not-allowed; transform: none; }
+
+.rules {
+  background: var(--panel); border: 1px solid #ffffff14; border-radius: var(--radius);
+  padding: 14px 18px; color: var(--muted); line-height: 1.7; margin-bottom: 20px; font-size: .95rem;
+}
+.rules b { color: var(--ink); }
+
+.controls { display: flex; gap: 12px; justify-content: center; margin-top: 20px; flex-wrap: wrap; }
+.status { text-align: center; margin-top: 14px; min-height: 1.4em; color: var(--accent); font-weight: 600; }
+.status.bad { color: var(--bad); }
+
+/* ============ חידה 1: נהר ============ */
+.river-scene {
+  display: grid; grid-template-columns: 1fr 1.2fr 1fr;
+  background: linear-gradient(#87c5eb, #b7e3f7);
+  border-radius: var(--radius); overflow: hidden; min-height: 260px;
+  border: 1px solid #ffffff22;
+}
+.bank {
+  background: linear-gradient(#7cc270, #4e9a44);
+  display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: center;
+  gap: 8px; padding: 18px 10px; position: relative;
+}
+#bank-left { border-left: 6px solid #3d7a36; }
+#bank-right { border-right: 6px solid #3d7a36; }
+
+.water { position: relative; background: linear-gradient(#4aa3d8, #2f7fb5); overflow: hidden; }
+.waves {
+  position: absolute; inset: 0; opacity: .35;
+  background: repeating-linear-gradient(90deg, transparent 0 26px, #ffffff55 26px 34px);
+  background-size: 60px 100%;
+  animation: waveMove 3s linear infinite;
+  mask-image: repeating-linear-gradient(180deg, transparent 0 26px, #000 26px 30px);
+  -webkit-mask-image: repeating-linear-gradient(180deg, transparent 0 26px, #000 26px 30px);
+}
+@keyframes waveMove { to { background-position: 60px 0; } }
+
+.boat {
+  position: absolute; bottom: 26px; right: 4%;
+  display: flex; flex-direction: column; align-items: center;
+  transition: right 1s ease-in-out;
+  animation: bob 2.4s ease-in-out infinite;
+}
+.boat.at-right { right: calc(96% - 110px); }
+@keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+.boat-hull { font-size: 3.2rem; line-height: 1; }
+.boat-seats { display: flex; gap: 4px; font-size: 1.7rem; min-height: 1.9rem; }
+
+.piece {
+  font-size: 2.2rem; cursor: pointer; background: #ffffffcc; border-radius: 14px;
+  padding: 6px 10px; border: 2px solid transparent; line-height: 1;
+  transition: transform .15s, border-color .15s; user-select: none;
+}
+.piece:hover { transform: scale(1.12); border-color: var(--accent); }
+.piece.in-boat { font-size: 1.7rem; padding: 2px 6px; background: transparent; border: none; }
+
+/* ============ חידה 2: צפרדעים ============ */
+.pond {
+  background: linear-gradient(#2f7fb5, #24618c);
+  border-radius: var(--radius); padding: 40px 14px; border: 1px solid #ffffff22;
+}
+.pads { display: flex; justify-content: center; gap: clamp(4px, 2vw, 16px); direction: ltr; }
+.pad {
+  width: clamp(44px, 11vw, 92px); height: clamp(44px, 11vw, 92px);
+  background: radial-gradient(circle at 40% 35%, #7cc270, #3d7a36);
+  border-radius: 50%; border: 3px solid #2c5b27;
+  display: flex; align-items: center; justify-content: center;
+  position: relative; box-shadow: 0 8px 16px #00000044;
+}
+.frog {
+  font-size: clamp(1.6rem, 5.5vw, 3rem); cursor: pointer; user-select: none;
+  transition: transform .25s ease; line-height: 1;
+}
+.frog.dir-right { transform: scaleX(-1); }
+.frog.orange { filter: sepia(1) saturate(4) hue-rotate(-18deg); }
+.frog.movable:hover { transform: scale(1.2); }
+.frog.dir-right.movable:hover { transform: scaleX(-1) scale(1.2); }
+.frog.hop { animation: hop .3s ease; }
+.frog.dir-right.hop { animation: hopFlip .3s ease; }
+@keyframes hop { 50% { transform: translateY(-26px); } }
+@keyframes hopFlip { 0%,100% { transform: scaleX(-1); } 50% { transform: scaleX(-1) translateY(-26px); } }
+
+/* ============ חידה 3: גשר ============ */
+.candle-wrap { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+.candle-emoji { font-size: 1.8rem; }
+.candle-bar { flex: 1; height: 16px; background: #ffffff1a; border-radius: 999px; overflow: hidden; }
+.candle-fill {
+  height: 100%; width: 100%;
+  background: linear-gradient(90deg, #ffd24d, #ff8c42);
+  border-radius: 999px; transition: width .8s ease;
+}
+
+.bridge-scene {
+  display: grid; grid-template-columns: 1fr 1.1fr 1fr;
+  background: linear-gradient(#1b2a45 0%, #223a5e 70%, #17293f 100%);
+  border-radius: var(--radius); min-height: 240px; overflow: hidden; border: 1px solid #ffffff22;
+  position: relative;
+}
+.cliff {
+  background: linear-gradient(#5b4632, #3e2f21);
+  padding: 14px 10px; display: flex; flex-direction: column; gap: 10px;
+}
+.cliff-label { text-align: center; color: #e8d9b8; font-weight: 700; }
+.people { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; align-content: flex-start; }
+
+.person {
+  background: #ffffff14; border: 2px solid transparent; border-radius: 14px;
+  padding: 8px 10px; cursor: pointer; text-align: center; user-select: none;
+  transition: transform .15s, border-color .15s, background .15s;
+  color: var(--ink); font: inherit;
+}
+.person:hover { transform: scale(1.07); }
+.person.selected { border-color: var(--accent); background: #ffb84d2b; }
+.person.disabled { opacity: .45; cursor: not-allowed; transform: none; }
+.person .p-emoji { font-size: 2rem; display: block; line-height: 1.1; }
+.person .p-time { font-size: .8rem; color: var(--muted); display: block; }
+
+.bridge-deck { position: relative; display: flex; align-items: center; }
+.bridge-planks {
+  width: 100%; height: 34px; margin-top: 30px;
+  background: repeating-linear-gradient(90deg, #8a6a44 0 18px, #6d5335 18px 22px);
+  border-top: 4px solid #a3805a; border-bottom: 4px solid #4a3924;
+  box-shadow: 0 14px 24px #00000066;
+}
+.lamp {
+  position: absolute; top: 8px; right: 8%; font-size: 1.6rem;
+  transition: right 1s ease-in-out;
+  filter: drop-shadow(0 0 10px #ffd24daa);
+}
+.lamp.at-end { right: calc(92% - 1.6rem); }
+
+/* ============ חלון סיום ============ */
+.overlay {
+  position: fixed; inset: 0; background: #000000a8; display: none;
+  align-items: center; justify-content: center; z-index: 50; padding: 16px;
+}
+.overlay.show { display: flex; }
+.dialog {
+  background: var(--panel); border: 1px solid #ffffff22; border-radius: 22px;
+  padding: 34px 30px; text-align: center; max-width: 420px; width: 100%;
+  animation: pop .3s ease;
+}
+@keyframes pop { from { transform: scale(.85); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+.dialog-emoji { font-size: 3.4rem; margin-bottom: 8px; }
+.dialog h3 { font-size: 1.5rem; margin-bottom: 8px; }
+.dialog p { color: var(--muted); line-height: 1.6; margin-bottom: 20px; }
+.dialog-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+
+@media (max-width: 560px) {
+  .hero h1 { font-size: 2rem; }
+  .boat-hull { font-size: 2.4rem; }
+  .piece { font-size: 1.7rem; }
+}
