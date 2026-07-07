@@ -3,54 +3,98 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b1026">
 <title>חידות היגיון אינטראקטיביות</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+<!-- רקע חי -->
+<div class="bg-orbs" aria-hidden="true">
+  <span></span><span></span><span></span><span></span>
+</div>
+<canvas id="confetti" aria-hidden="true"></canvas>
+
 <!-- ===================== מסך הבית ===================== -->
 <main id="home" class="screen active">
   <header class="hero">
-    <h1>🧩 חידות היגיון</h1>
-    <p>שלוש חידות קלאסיות — פחות דיבורים, יותר לחיצות. בהצלחה!</p>
+    <div class="hero-badge">🧩 אוסף חידות</div>
+    <h1>חידות <span class="grad">היגיון</span></h1>
+    <p>שש חידות קלאסיות — פחות דיבורים, יותר לחיצות.</p>
+    <div class="progress-pill">
+      <span class="progress-track"><span class="progress-bar" id="progress-bar"></span></span>
+      <b id="progress-label">0/6 נפתרו</b>
+    </div>
   </header>
 
-  <div class="cards">
-    <button class="card" data-goto="river">
-      <span class="card-emoji">🐺🐑🥬</span>
+  <div class="cards" id="cards">
+    <button class="card" data-goto="river" style="--c1:#4ea8de;--c2:#3d8a5a">
+      <span class="solved-badge">✓ נפתר</span>
+      <span class="card-icon">🐺🐑🥬</span>
       <span class="card-title">חציית הנהר</span>
       <span class="card-desc">העבירו זאב, כבשה וחסה לגדה השנייה — בלי שמישהו יאכל מישהו.</span>
-      <span class="card-cta">לחידה ←</span>
+      <span class="card-foot"><span class="stars" data-stars="2"></span><span class="card-cta">שחקו ←</span></span>
     </button>
 
-    <button class="card" data-goto="frogs">
-      <span class="card-emoji">🐸🪷🐸</span>
+    <button class="card" data-goto="frogs" style="--c1:#43c06a;--c2:#e0952f">
+      <span class="solved-badge">✓ נפתר</span>
+      <span class="card-icon">🐸🪷🐸</span>
       <span class="card-title">קפיצת הצפרדעים</span>
-      <span class="card-desc">שתי קבוצות של צפרדעים צריכות להחליף מקומות על אבני הנהר.</span>
-      <span class="card-cta">לחידה ←</span>
+      <span class="card-desc">שתי קבוצות צפרדעים צריכות להחליף מקומות על אבני הנהר.</span>
+      <span class="card-foot"><span class="stars" data-stars="3"></span><span class="card-cta">שחקו ←</span></span>
     </button>
 
-    <button class="card" data-goto="bridge">
-      <span class="card-emoji">🌉🕯️</span>
+    <button class="card" data-goto="bridge" style="--c1:#ffb84d;--c2:#c25e2e">
+      <span class="solved-badge">✓ נפתר</span>
+      <span class="card-icon">🌉🕯️</span>
       <span class="card-title">הגשר והנר</span>
       <span class="card-desc">ארבעה אנשים, נר אחד, 17 דקות. יעברו כולם בזמן?</span>
-      <span class="card-cta">לחידה ←</span>
+      <span class="card-foot"><span class="stars" data-stars="4"></span><span class="card-cta">שחקו ←</span></span>
+    </button>
+
+    <button class="card" data-goto="hanoi" style="--c1:#b07cf0;--c2:#5e46c2">
+      <span class="solved-badge">✓ נפתר</span>
+      <span class="card-icon">🗼💿</span>
+      <span class="card-title">מגדלי האנוי</span>
+      <span class="card-desc">העבירו את מגדל הטבעות לעמוד השלישי — בלי טבעת גדולה על קטנה.</span>
+      <span class="card-foot"><span class="stars" data-stars="2"></span><span class="card-cta">שחקו ←</span></span>
+    </button>
+
+    <button class="card" data-goto="jugs" style="--c1:#38bdf8;--c2:#2563a8">
+      <span class="solved-badge">✓ נפתר</span>
+      <span class="card-icon">🫙💧</span>
+      <span class="card-title">כדי המים</span>
+      <span class="card-desc">בעזרת כד 3 ליטר וכד 5 ליטר — מדדו בדיוק 4 ליטר.</span>
+      <span class="card-foot"><span class="stars" data-stars="3"></span><span class="card-cta">שחקו ←</span></span>
+    </button>
+
+    <button class="card" data-goto="mc" style="--c1:#f472b6;--c2:#a83258">
+      <span class="solved-badge">✓ נפתר</span>
+      <span class="card-icon">😇🛶👹</span>
+      <span class="card-title">מיסיונרים וקניבלים</span>
+      <span class="card-desc">העבירו שלושה מכל צד — בלי שהקניבלים יהיו רוב באף גדה.</span>
+      <span class="card-foot"><span class="stars" data-stars="3"></span><span class="card-cta">שחקו ←</span></span>
     </button>
   </div>
+
+  <footer class="home-foot">
+    <button class="ghost-btn small" id="sound-toggle" aria-pressed="true">🔊 צלילים</button>
+    <button class="ghost-btn small" id="reset-progress">אפס התקדמות</button>
+  </footer>
 </main>
 
 <!-- ===================== חידה 1: חציית הנהר ===================== -->
-<section id="river" class="screen">
+<section id="river" class="screen puzzle">
   <nav class="topbar">
     <button class="back-btn" data-goto="home">→ חזרה</button>
     <h2>🐺 חציית הנהר</h2>
-    <span class="counter">חציות: <b id="river-moves">0</b> <small>(אפשרי ב־7)</small></span>
+    <span class="counter">חציות <b id="river-moves">0</b> <small>· מיטבי 7</small></span>
   </nav>
 
   <p class="rules">
-    האיכר צריך להעביר את הזאב, הכבשה והחסה לגדה השנייה. בסירה יש מקום לאיכר ולנוסע אחד בלבד.
-    אם הזאב יישאר לבד עם הכבשה — הוא יטרוף אותה. אם הכבשה תישאר לבד עם החסה — היא תאכל אותה.
-    <br><b>איך משחקים:</b> לוחצים על דמות כדי להעלות/להוריד אותה מהסירה, ואז לוחצים "לחצות!".
+    האיכר מעביר את הזאב, הכבשה והחסה לגדה השנייה. בסירה יש מקום לאיכר ולנוסע אחד בלבד.
+    זאב לבד עם כבשה — יטרוף אותה; כבשה לבד עם חסה — תאכל אותה.
+    <br><b>איך משחקים:</b> לוחצים על דמות כדי להעלות/להוריד אותה מהסירה, ואז "לחצות!".
   </p>
 
   <div class="river-scene">
@@ -73,17 +117,17 @@
 </section>
 
 <!-- ===================== חידה 2: צפרדעים ===================== -->
-<section id="frogs" class="screen">
+<section id="frogs" class="screen puzzle">
   <nav class="topbar">
     <button class="back-btn" data-goto="home">→ חזרה</button>
     <h2>🐸 קפיצת הצפרדעים</h2>
-    <span class="counter">קפיצות: <b id="frogs-moves">0</b> <small>(אפשרי ב־15)</small></span>
+    <span class="counter">קפיצות <b id="frogs-moves">0</b> <small>· מיטבי 15</small></span>
   </nav>
 
   <p class="rules">
-    שלוש צפרדעים ירוקות מול שלוש צפרדעים כתומות, והן צריכות להחליף מקומות.
-    צפרדע יכולה לזוז רק קדימה: צעד אחד לאבן פנויה, או קפיצה מעל צפרדע אחת בדיוק אל אבן פנויה. אסור לזוז אחורה!
-    <br><b>איך משחקים:</b> פשוט לוחצים על הצפרדע שרוצים להזיז.
+    שלוש צפרדעים ירוקות מול שלוש כתומות — עליהן להחליף מקומות. צפרדע זזה רק קדימה:
+    צעד לאבן פנויה, או קפיצה מעל צפרדע אחת אל אבן פנויה. אסור אחורה!
+    <br><b>איך משחקים:</b> לוחצים על הצפרדע שרוצים להזיז.
   </p>
 
   <div class="pond">
@@ -98,18 +142,17 @@
 </section>
 
 <!-- ===================== חידה 3: הגשר והנר ===================== -->
-<section id="bridge" class="screen">
+<section id="bridge" class="screen puzzle">
   <nav class="topbar">
     <button class="back-btn" data-goto="home">→ חזרה</button>
     <h2>🌉 הגשר והנר</h2>
-    <span class="counter">זמן: <b id="bridge-time">0</b>/17 דק'</span>
+    <span class="counter">זמן <b id="bridge-time">0</b>/17 דק'</span>
   </nav>
 
   <p class="rules">
-    ארבעה אנשים צריכים לחצות גשר רעוע בלילה, ויש להם נר אחד שיכבה בעוד <b>17 דקות</b>.
-    על הגשר יכולים ללכת לכל היותר שניים יחד, וחייבים את הנר. זוג הולך בקצב של האיטי מביניהם.
-    זריז ⚡ ‎1 דק' · רץ 🏃 ‎2 דק' · מטייל 🚶 ‎5 דק' · סבא 🧓 ‎10 דק'.
-    <br><b>איך משחקים:</b> בוחרים עד שני אנשים בצד שבו נמצא הנר, ולוחצים "לעבור את הגשר".
+    ארבעה אנשים חוצים גשר רעוע בלילה עם נר אחד שיכבה בעוד <b>17 דקות</b>. על הגשר עד שניים יחד,
+    תמיד עם הנר, ובקצב האיטי מביניהם. זריז ⚡ 1 · רץ 🏃 2 · מטייל 🚶 5 · סבא 🧓 10.
+    <br><b>איך משחקים:</b> בוחרים עד שני אנשים בצד שבו הנר, ולוחצים "לעבור".
   </p>
 
   <div class="candle-wrap">
@@ -131,6 +174,107 @@
     <button class="ghost-btn" id="bridge-reset">התחלה מחדש ↺</button>
   </div>
   <p class="status" id="bridge-status"></p>
+</section>
+
+<!-- ===================== חידה 4: מגדלי האנוי ===================== -->
+<section id="hanoi" class="screen puzzle">
+  <nav class="topbar">
+    <button class="back-btn" data-goto="home">→ חזרה</button>
+    <h2>🗼 מגדלי האנוי</h2>
+    <span class="counter">מהלכים <b id="hanoi-moves">0</b> <small>· מיטבי 7</small></span>
+  </nav>
+
+  <p class="rules">
+    העבירו את מגדל הטבעות מהעמוד הימני לעמוד השמאלי. מזיזים טבעת אחת בכל פעם,
+    ואסור להניח טבעת גדולה על טבעת קטנה ממנה.
+    <br><b>איך משחקים:</b> לוחצים על עמוד כדי להרים את הטבעת העליונה, ואז על עמוד היעד.
+  </p>
+
+  <div class="hanoi-scene" id="hanoi-scene"></div>
+
+  <div class="controls">
+    <button class="ghost-btn" id="hanoi-undo">ביטול מהלך ↩</button>
+    <button class="ghost-btn" id="hanoi-reset">התחלה מחדש ↺</button>
+  </div>
+  <p class="status" id="hanoi-status"></p>
+</section>
+
+<!-- ===================== חידה 5: כדי מים ===================== -->
+<section id="jugs" class="screen puzzle">
+  <nav class="topbar">
+    <button class="back-btn" data-goto="home">→ חזרה</button>
+    <h2>🫙 כדי המים</h2>
+    <span class="counter">מהלכים <b id="jugs-moves">0</b> <small>· מיטבי 6</small></span>
+  </nav>
+
+  <p class="rules">
+    יש לכם כד של 3 ליטר וכד של 5 ליטר, וברז מים. המטרה: להגיע לבדיוק <b>4 ליטר</b> באחד הכדים.
+    אפשר למלא כד עד הסוף, לרוקן אותו, או לשפוך מכד לכד עד שהאחד מתרוקן או השני מתמלא.
+    <br><b>איך משחקים:</b> משתמשים בכפתורים שמתחת לכדים ובחיצי השפיכה שביניהם.
+  </p>
+
+  <div class="jugs-scene">
+    <div class="jug-unit">
+      <div class="jug" id="jug-a"><div class="jug-water" id="water-a"><span class="jug-liters" id="liters-a">0</span></div></div>
+      <div class="jug-cap">קיבולת 3 ליטר</div>
+      <div class="jug-btns">
+        <button class="ghost-btn small" data-jug="a" data-act="fill">מלא 🚰</button>
+        <button class="ghost-btn small" data-jug="a" data-act="empty">רוקן ⏬</button>
+      </div>
+    </div>
+
+    <div class="pour-col">
+      <button class="pour-btn" data-pour="ba" title="שפוך מהכד הגדול לקטן">→</button>
+      <button class="pour-btn" data-pour="ab" title="שפוך מהכד הקטן לגדול">←</button>
+    </div>
+
+    <div class="jug-unit">
+      <div class="jug big" id="jug-b"><div class="jug-water" id="water-b"><span class="jug-liters" id="liters-b">0</span></div><div class="jug-goal" style="bottom:80%">4 ל'</div></div>
+      <div class="jug-cap">קיבולת 5 ליטר</div>
+      <div class="jug-btns">
+        <button class="ghost-btn small" data-jug="b" data-act="fill">מלא 🚰</button>
+        <button class="ghost-btn small" data-jug="b" data-act="empty">רוקן ⏬</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <button class="ghost-btn" id="jugs-reset">התחלה מחדש ↺</button>
+  </div>
+  <p class="status" id="jugs-status"></p>
+</section>
+
+<!-- ===================== חידה 6: מיסיונרים וקניבלים ===================== -->
+<section id="mc" class="screen puzzle">
+  <nav class="topbar">
+    <button class="back-btn" data-goto="home">→ חזרה</button>
+    <h2>🛶 מיסיונרים וקניבלים</h2>
+    <span class="counter">חציות <b id="mc-moves">0</b> <small>· מיטבי 11</small></span>
+  </nav>
+
+  <p class="rules">
+    שלושה מיסיונרים 😇 ושלושה קניבלים 👹 צריכים לעבור את הנהר. בסירה 1–2 נוסעים, ומישהו חייב לחתור.
+    בשום גדה הקניבלים לא יעלו במספרם על המיסיונרים — אחרת רע!
+    <br><b>איך משחקים:</b> לוחצים על דמות שבצד הסירה כדי להעלותה, ואז "לחתור!".
+  </p>
+
+  <div class="river-scene mc-scene">
+    <div class="bank" id="mc-left"></div>
+    <div class="water">
+      <div class="waves"></div>
+      <div class="boat" id="mc-boat">
+        <div class="boat-seats" id="mc-seats"></div>
+        <div class="boat-hull">🛶</div>
+      </div>
+    </div>
+    <div class="bank" id="mc-right"></div>
+  </div>
+
+  <div class="controls">
+    <button class="primary-btn" id="mc-cross">לחתור! 🛶</button>
+    <button class="ghost-btn" id="mc-reset">התחלה מחדש ↺</button>
+  </div>
+  <p class="status" id="mc-status"></p>
 </section>
 
 <!-- ===================== חלון ניצחון/הפסד ===================== -->
