@@ -13,5 +13,8 @@ request matches the skill's description.
 | `tdd-workflow` | Enforces test-driven development (red → green → refactor, 80%+ coverage) | [affaan-m/everything-claude-code](https://github.com/affaan-m/everything-claude-code) (MIT) |
 | `code-reviewer` | Senior-level review of recent changes: quality, security, maintainability | [affaan-m/everything-claude-code](https://github.com/affaan-m/everything-claude-code) (MIT), adapted from agent to skill |
 | `skill-creator` | Create, improve, and eval new skills | [anthropics/skills](https://github.com/anthropics/skills) |
+| `grill-me` | Lighter variant of `grill-with-docs`: interview only, no docs written | [mattpocock/skills](https://github.com/mattpocock/skills) (MIT) |
+| `find-skills` | Discover and install skills from the skills.sh ecosystem (`npx skills`) | [vercel-labs/skills](https://github.com/vercel-labs/skills) (MIT) |
+| `ui-ux-pro-max` | UI/UX design intelligence: searchable database of styles, palettes, font pairings, UX rules across 10+ stacks | [nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) (MIT) |
 
 Vendored on 2026-07-08. To update a skill, re-copy it from its source repo.
