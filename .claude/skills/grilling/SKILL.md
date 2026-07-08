@@ -1,6 +1,6 @@
 ---
 name: grilling
-description: Grill the user relentlessly about a plan or design. Use when the user wants to stress-test a plan before building, or uses any 'grill' trigger phrases.
+description: "Grill the user relentlessly about a plan or design, one question at a time, until shared understanding. Use when the user shares an idea, plan, feature, or spec and wants it stress-tested BEFORE building. Trigger on: תשאל אותי, תחקור אותי, תאתגר אותי, לחדד, תוכנית, אפיון, רעיון, לפני שמתחילים, מה דעתך על התוכנית, grill, stress-test."
 ---
 
 Interview me relentlessly about every aspect of this plan until we reach a shared understanding. Walk down each branch of the design tree, resolving dependencies between decisions one-by-one. For each question, provide your recommended answer.

@@ -1,6 +1,6 @@
 ---
 name: code-reviewer
-description: Expert code review specialist. Proactively reviews code for quality, security, and maintainability. Use immediately after writing or modifying code. MUST BE USED for all code changes.
+description: "Expert code review for quality, security, and maintainability. Use immediately after writing or modifying code, and for any request to check, review, or improve existing code. Trigger on: סקירת קוד, קוד רוויו, תבדוק את הקוד, תעבור על הקוד, אבטחה, איכות קוד, שגיאות, באגים, code review, security check."
 allowed-tools: Read, Grep, Glob, Bash
 ---
 
